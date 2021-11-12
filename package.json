@@ -1,7 +1,7 @@
 {
   "name": "mongoose_skeleton",
   "version": "1.0.0",
-  "description": "",
+  "description": "Homework 14 - Unit 18 Nosql Homework: Workout Tracker",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,8 +12,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.3",
-    "mongoose": "^5.3.16",
-    "morgan": "^1.9.1"
-  }
+    "express": "^4.17.1",
+    "mongoose": "^5.13.13",
+    "morgan": "^1.10.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bretpeters3n/workout-tracker-nosql.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/bretpeters3n/workout-tracker-nosql/issues"
+  },
+  "homepage": "https://github.com/bretpeters3n/workout-tracker-nosql#readme"
 }

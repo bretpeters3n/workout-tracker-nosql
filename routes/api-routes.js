@@ -1,4 +1,6 @@
 const router = require("express").Router();
+// const mongojs = require("mongojs");
+
 const db = require("../models");
 
 const path = require("path");
@@ -8,21 +10,21 @@ const path = require("path");
 // get workouts
 // GET /api/workouts/
 router.get("/api/workouts", (req, res) => {
-  console.log("entered GET /api/workouts");
-  db.Workout.find({}, (error, data) => {
-    data.forEach((workout) => {
-      var total = 0;
-      workout.exercises.forEach((e) => {
-        total += e.duration;
+  db.Workout.find({})
+    .then((dbWorkout) => {
+      dbWorkout.forEach((workout) => {
+        var total = 0;
+        workout.exercises.forEach((e) => {
+          total += e.duration;
+        });
+        workout.totalDuration = total;
       });
-      workout.totalDuration = total;
+
+      res.json(dbWorkout);
+    })
+    .catch((err) => {
+      res.json(err);
     });
-    if (error) {
-      res.send(error);
-    } else {
-      res.json(data);
-    }
-  });
 });
 
 // add an exercise
@@ -31,7 +33,7 @@ router.put("/api/workouts/:id", (req, res) => {
   console.log("entered PUT /api/workouts");
   db.Workout.findOneAndUpdate(
     {
-      _id: mongojs.ObjectId(req.params.id),
+      _id: req.params.id,
     },
     {
       $inc: { totalDuration: req.body.duration },
@@ -52,7 +54,7 @@ router.put("/api/workouts/:id", (req, res) => {
 // POST /api/workouts/
 router.post("/api/workouts", (req, res) => {
   console.log("entered POST /api/workouts");
-  db.Workout.insert(req.body, (error, data) => {
+  db.Workout.create(req.body, (error, data) => {
     if (error) {
       res.send(error);
     } else {

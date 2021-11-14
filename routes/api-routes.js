@@ -3,19 +3,18 @@ const router = require("express").Router();
 
 const db = require("../models");
 
-const path = require("path");
+// const path = require("path");
 
 // these routes will be determined by the existing JS files in the PUBLIC folder
 
-// get workouts
 // GET /api/workouts/
 router.get("/api/workouts", (req, res) => {
   db.Workout.find({})
     .then((dbWorkout) => {
       dbWorkout.forEach((workout) => {
         var total = 0;
-        workout.exercises.forEach((e) => {
-          total += e.duration;
+        workout.exercises.forEach((event) => {
+          total += event.duration;
         });
         workout.totalDuration = total;
       });
@@ -27,10 +26,9 @@ router.get("/api/workouts", (req, res) => {
     });
 });
 
-// add an exercise
 // PUT /api/workouts/
 router.put("/api/workouts/:id", (req, res) => {
-  console.log("entered PUT /api/workouts");
+  // console.log("entered PUT /api/workouts");
   db.Workout.findOneAndUpdate(
     {
       _id: req.params.id,
@@ -50,10 +48,9 @@ router.put("/api/workouts/:id", (req, res) => {
   );
 });
 
-// create a workout
 // POST /api/workouts/
 router.post("/api/workouts", (req, res) => {
-  console.log("entered POST /api/workouts");
+  // console.log("entered POST /api/workouts");
   db.Workout.create(req.body, (error, data) => {
     if (error) {
       res.send(error);
@@ -65,7 +62,7 @@ router.post("/api/workouts", (req, res) => {
 
 // GET /api/workouts/range
 router.get("/api/workouts/range", (req, res) => {
-  console.log("entered GET /api/workouts/range");
+  // console.log("entered GET /api/workouts/range");
   db.Workout.find({}, (error, data) => {
     if (error) {
       res.send(error);
